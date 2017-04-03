@@ -1,0 +1,355 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/jerrysu/gulp-rsync"
+
+    >gulp-rsync (v0.0.7)</a>
+</h1>
+<h4>Rsync tasks for deploying gulp file structures</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-rsync">module gulp-rsync</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.rsync">
+            function <span class="apidocSignatureSpan">gulp-rsync.</span>rsync
+            <span class="apidocSignatureSpan">(config)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">gulp-rsync.</span>rsync.prototype</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-rsync.rsync">module gulp-rsync.rsync</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.rsync.rsync">
+            function <span class="apidocSignatureSpan">gulp-rsync.</span>rsync
+            <span class="apidocSignatureSpan">(config)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-rsync.rsync.prototype">module gulp-rsync.rsync.prototype</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.rsync.prototype.command">
+            function <span class="apidocSignatureSpan">gulp-rsync.rsync.prototype.</span>command
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.rsync.prototype.execute">
+            function <span class="apidocSignatureSpan">gulp-rsync.rsync.prototype.</span>execute
+            <span class="apidocSignatureSpan">(callback)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-rsync" id="apidoc.module.gulp-rsync">module gulp-rsync</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.rsync" id="apidoc.element.gulp-rsync.rsync">
+        function <span class="apidocSignatureSpan">gulp-rsync.</span>rsync
+        <span class="apidocSignatureSpan">(config)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function rsync(config) {
+  if (!(this instanceof rsync)) {
+    return new rsync(config);
+  }
+
+  assert(typeof config === &#x27;object&#x27;);
+  assert(!config.options || typeof config.options === &#x27;object&#x27;);
+  this._options = config.options || {};
+  var sources = config.source;
+  if (!Array.isArray(sources)) {
+    sources = [sources];
+  }
+  assert(sources.length &#x3e; 0 &#x26;&#x26; every(sources, isString));
+  assert(sources.length === 1 || config.destination);
+  this._sources = sources;
+  assert(!config.destination || typeof config.destination === &#x27;string&#x27;);
+  this._destination = config.destination;
+  assert(!config.cwd || typeof config.cwd === &#x27;string&#x27;);
+  this._cwd = config.cwd;
+  assert(!config.stdoutHandler || typeof config.stdoutHandler === &#x27;function&#x27;);
+  this._stdout = config.stdoutHandler;
+  assert(!config.stderrHandler || typeof config.stderrHandler === &#x27;function&#x27;);
+  this._stderr = config.stderrHandler;
+
+  return this;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-rsync.rsync" id="apidoc.module.gulp-rsync.rsync">module gulp-rsync.rsync</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.rsync.rsync" id="apidoc.element.gulp-rsync.rsync.rsync">
+        function <span class="apidocSignatureSpan">gulp-rsync.</span>rsync
+        <span class="apidocSignatureSpan">(config)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function rsync(config) {
+  if (!(this instanceof rsync)) {
+    return new rsync(config);
+  }
+
+  assert(typeof config === &#x27;object&#x27;);
+  assert(!config.options || typeof config.options === &#x27;object&#x27;);
+  this._options = config.options || {};
+  var sources = config.source;
+  if (!Array.isArray(sources)) {
+    sources = [sources];
+  }
+  assert(sources.length &#x3e; 0 &#x26;&#x26; every(sources, isString));
+  assert(sources.length === 1 || config.destination);
+  this._sources = sources;
+  assert(!config.destination || typeof config.destination === &#x27;string&#x27;);
+  this._destination = config.destination;
+  assert(!config.cwd || typeof config.cwd === &#x27;string&#x27;);
+  this._cwd = config.cwd;
+  assert(!config.stdoutHandler || typeof config.stdoutHandler === &#x27;function&#x27;);
+  this._stdout = config.stdoutHandler;
+  assert(!config.stderrHandler || typeof config.stderrHandler === &#x27;function&#x27;);
+  this._stderr = config.stderrHandler;
+
+  return this;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-rsync.rsync.prototype" id="apidoc.module.gulp-rsync.rsync.prototype">module gulp-rsync.rsync.prototype</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.rsync.prototype.command" id="apidoc.element.gulp-rsync.rsync.prototype.command">
+        function <span class="apidocSignatureSpan">gulp-rsync.rsync.prototype.</span>command
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">command = function () {
+  var args = [];
+
+  var shortOptions = [];
+  var longOptions = [];
+
+  for (var key in this._options) {
+    var value = this._options[key];
+    if (typeof value !== &#x27;undefined&#x27; &#x26;&#x26; value !== false) {
+      if (key.length === 1 &#x26;&#x26; value === true) {
+        shortOptions.push(key);
+      } else {
+        var values = Array.isArray(value) ? value : [value];
+        for (var i = 0, l = values.length; i &#x3c; l; i++) {
+          longOptions.push({key: key, value: values[i]});
+        }
+      }
+    }
+  }
+
+  if (shortOptions.length &#x3e; 0) {
+    args.push(&#x27;-&#x27; + shortOptions.join(&#x27;&#x27;));
+  }
+
+  if (longOptions.length &#x3e; 0) {
+    args = args.concat(longOptions.map(function(option) {
+      var single = option.key.length === 1;
+      var output = (single ? &#x27;-&#x27; : &#x27;--&#x27;) + option.key;
+      if (typeof option.value !== &#x27;boolean&#x27;) {
+        output += (single ? &#x27; &#x27; : &#x27;=&#x27;) + escapeShellArg(option.value);
+      }
+      return output;
+    }));
+  }
+
+  args = args.concat(this._sources.map(escapeShellArg));
+
+  if (this._destination) {
+    args.push(escapeShellArg(this._destination));
+  }
+
+  return &#x27;rsync &#x27; + args.join(&#x27; &#x27;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  args.push(escapeShellArg(this._destination));
+}
+
+return &#x27;rsync &#x27; + args.join(&#x27; &#x27;);
+  },
+
+  execute: function(callback) {
+var command = this.<span class="apidocCodeKeywordSpan">command</span>();
+
+var childProcess;
+if (process.platform === &#x27;win32&#x27;) {
+  childProcess = spawn(&#x27;cmd.exe&#x27;, [&#x27;/s&#x27;, &#x27;/c&#x27;, &#x27;&#x22;&#x27; + command + &#x27;&#x22;&#x27;], {
+    cwd: this._cwd,
+    stdio: [process.stdin, &#x27;pipe&#x27;, &#x27;pipe&#x27;],
+    env: process.env,
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.rsync.prototype.execute" id="apidoc.element.gulp-rsync.rsync.prototype.execute">
+        function <span class="apidocSignatureSpan">gulp-rsync.rsync.prototype.</span>execute
+        <span class="apidocSignatureSpan">(callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">execute = function (callback) {
+  var command = this.command();
+
+  var childProcess;
+  if (process.platform === &#x27;win32&#x27;) {
+    childProcess = spawn(&#x27;cmd.exe&#x27;, [&#x27;/s&#x27;, &#x27;/c&#x27;, &#x27;&#x22;&#x27; + command + &#x27;&#x22;&#x27;], {
+      cwd: this._cwd,
+      stdio: [process.stdin, &#x27;pipe&#x27;, &#x27;pipe&#x27;],
+      env: process.env,
+      windowsVerbatimArguments: true
+    });
+  } else {
+    childProcess = spawn(&#x27;/bin/sh&#x27;, [&#x27;-c&#x27;, command], {
+      cwd: this._cwd,
+      stdio: &#x27;pipe&#x27;,
+      env: process.env
+    });
+  }
+
+  if (this._stdout) {
+    childProcess.stdout.on(&#x27;data&#x27;, this._stdout);
+  }
+
+  if (this._stderr) {
+    childProcess.stderr.on(&#x27;data&#x27;, this._stderr);
+  }
+
+  childProcess.on(&#x27;close&#x27;, function(code) {
+    var error = null;
+    if (code !== 0) {
+      error = new Error(&#x27;rsync exited with code &#x27; + code);
+    }
+
+    if (typeof callback === &#x27;function&#x27;) {
+      callback(error, command);
+    }
+  });
+
+  return childProcess;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  };
+  config.stdoutHandler = handler;
+  config.stderrHandler = handler;
+
+  gutil.log(&#x27;gulp-rsync:&#x27;, &#x27;Starting rsync to &#x27; + destination + &#x27;...&#x27;);
+}
+
+rsync(config).<span class="apidocCodeKeywordSpan">execute</span>(function(error, command) {
+  if (error) {
+    this.emit(&#x27;error&#x27;, new PluginError(&#x27;gulp-rsync&#x27;, error.stack));
+  }
+  if (options.command) {
+    gutil.log(command);
+  }
+  if (!options.silent) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
