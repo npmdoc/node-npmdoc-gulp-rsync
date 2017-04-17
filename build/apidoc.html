@@ -63,9 +63,27 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.gulp-rsync">
+            function <span class="apidocSignatureSpan"></span>gulp-rsync
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.rsync">
             function <span class="apidocSignatureSpan">gulp-rsync.</span>rsync
             <span class="apidocSignatureSpan">(config)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.toString">
+            function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
+            <span class="apidocSignatureSpan">()</span>
             </a>
 
         </li>
@@ -113,10 +131,166 @@
 
     </ol></li>
 
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-rsync.toString">module gulp-rsync.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.toString.toString">
+            function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.gulp-rsync" id="apidoc.module.gulp-rsync">module gulp-rsync</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.gulp-rsync" id="apidoc.element.gulp-rsync.gulp-rsync">
+        function <span class="apidocSignatureSpan"></span>gulp-rsync
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-rsync = function (options) {
+  if (typeof options !== &#x27;object&#x27;) {
+    this.emit(
+      &#x27;error&#x27;,
+      new PluginError(&#x27;gulp-rsync&#x27;, &#x27;options must be an object&#x27;)
+    );
+  }
+
+  if (typeof options.destination !== &#x27;string&#x27;) {
+    throw new PluginError(
+      &#x27;gulp-rsync&#x27;,
+      &#x27;destination must be a string to a desired path&#x27;
+    );
+  }
+
+  var sources = [];
+
+  var cwd = options.root ? path.resolve(options.root) : process.cwd();
+
+  return through.obj(function(file, enc, cb) {
+    if (file.isStream()) {
+      this.emit(
+        &#x27;error&#x27;,
+        new PluginError(&#x27;gulp-rsync&#x27;, &#x27;Streams are not supported!&#x27;)
+      );
+    }
+
+    if (path.relative(cwd, file.path).indexOf(&#x27;..&#x27;) === 0) {
+      this.emit(
+        &#x27;error&#x27;,
+        new PluginError(&#x27;gulp-rsync&#x27;, &#x27;Source contains paths outside of root&#x27;)
+      );
+    }
+
+    sources.push(file);
+    cb(null, file);
+  }, function(cb) {
+    sources = sources.filter(function(source) {
+      return !source.isNull() ||
+        options.emptyDirectories ||
+        (source.path === cwd &#x26;&#x26; options.recursive);
+    });
+
+    if (sources.length === 0) {
+      cb();
+      return;
+    }
+
+    var shell = options.shell;
+    if (options.port) {
+      shell = &#x27;ssh -p &#x27; + options.port;
+    }
+
+    var destination = options.destination;
+    if (options.hostname) {
+      destination = options.hostname + &#x27;:&#x27; + destination;
+      if (options.username) {
+        destination = options.username + &#x27;@&#x27; + destination;
+      }
+    } else {
+      destination = path.relative(cwd, path.resolve(process.cwd(), destination));
+    }
+
+    var config = {
+      options: {
+        &#x27;a&#x27;: options.archive,
+        &#x27;n&#x27;: options.dryrun,
+        &#x27;R&#x27;: options.relative !== false,
+        &#x27;c&#x27;: options.incremental,
+        &#x27;d&#x27;: options.emptyDirectories,
+        &#x27;e&#x27;: shell,
+        &#x27;r&#x27;: options.recursive &#x26;&#x26; !options.archive,
+        &#x27;t&#x27;: options.times &#x26;&#x26; !options.archive,
+        &#x27;u&#x27;: options.update,
+        &#x27;v&#x27;: !options.silent,
+        &#x27;z&#x27;: options.compress,
+        &#x27;chmod&#x27;: options.chmod,
+        &#x27;exclude&#x27;: options.exclude,
+        &#x27;include&#x27;: options.include,
+        &#x27;progress&#x27;: options.progress,
+        &#x27;links&#x27;: options.links
+      },
+      source: sources.map(function(source) {
+        return path.relative(cwd, source.path) || &#x27;.&#x27;;
+      }),
+      destination: destination,
+      cwd: cwd
+    };
+
+    if (options.options) {
+      for (var key in options.options) { config.options[key] = options.options[key]; }
+    }
+
+    if (options.clean) {
+      if (!options.recursive &#x26;&#x26; !options.archive) {
+        this.emit(
+          &#x27;error&#x27;,
+          new PluginError(&#x27;gulp-rsync&#x27;, &#x27;clean requires recursive or archive option&#x27;)
+        );
+      }
+      config.options[&#x27;delete&#x27;] = true;
+    }
+
+    if (!options.silent) {
+      var handler = function(data) {
+        data.toString().split(&#x27;\r&#x27;).forEach(function(chunk) {
+          chunk.split(&#x27;\n&#x27;).forEach(function(line, j, lines) {
+            log(&#x27;gulp-rsync:&#x27;, line, (j &#x3c; lines.length - 1 ? &#x27;\n&#x27; : &#x27;&#x27;));
+          });
+        });
+      };
+      config.stdoutHandler = handler;
+      config.stderrHandler = handler;
+
+      gutil.log(&#x27;gulp-rsync:&#x27;, &#x27;Starting rsync to &#x27; + destination + &#x27;...&#x27;);
+    }
+
+    rsync(config).execute(function(error, command) {
+      if (error) {
+        this.emit(&#x27;error&#x27;, new PluginError(&#x27;gulp-rsync&#x27;, error.stack));
+      }
+      if (options.command) {
+        gutil.log(command);
+      }
+      if (!options.silent) {
+        gutil.log(&#x27;gulp-rsync:&#x27;, &#x27;Completed rsync.&#x27;);
+      }
+      cb();
+    }.bind(this));
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
@@ -153,6 +327,37 @@
   return this;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.toString" id="apidoc.element.gulp-rsync.toString">
+        function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    );
+  }
+  config.options[&#x27;delete&#x27;] = true;
+}
+
+if (!options.silent) {
+  var handler = function(data) {
+    data.<span class="apidocCodeKeywordSpan">toString</span>().split(&#x27;\r&#x27;).forEach(function(chunk) {
+      chunk.split(&#x27;\n&#x27;).forEach(function(line, j, lines) {
+        log(&#x27;gulp-rsync:&#x27;, line, (j &#x3c; lines.length - 1 ? &#x27;\n&#x27; : &#x27;&#x27;));
+      });
+    });
+  };
+  config.stdoutHandler = handler;
+  config.stderrHandler = handler;
+...</pre></li>
     </ul>
 
 
@@ -341,6 +546,40 @@ rsync(config).<span class="apidocCodeKeywordSpan">execute</span>(function(error,
     gutil.log(command);
   }
   if (!options.silent) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-rsync.toString" id="apidoc.module.gulp-rsync.toString">module gulp-rsync.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-rsync.toString.toString" id="apidoc.element.gulp-rsync.toString.toString">
+        function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    );
+  }
+  config.options[&#x27;delete&#x27;] = true;
+}
+
+if (!options.silent) {
+  var handler = function(data) {
+    data.<span class="apidocCodeKeywordSpan">toString</span>().split(&#x27;\r&#x27;).forEach(function(chunk) {
+      chunk.split(&#x27;\n&#x27;).forEach(function(line, j, lines) {
+        log(&#x27;gulp-rsync:&#x27;, line, (j &#x3c; lines.length - 1 ? &#x27;\n&#x27; : &#x27;&#x27;));
+      });
+    });
+  };
+  config.stdoutHandler = handler;
+  config.stderrHandler = handler;
 ...</pre></li>
     </ul>
 
