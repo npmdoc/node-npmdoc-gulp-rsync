@@ -74,15 +74,6 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.toString">
-            function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-        <li>
-
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">gulp-rsync.</span>rsync.prototype</span>
 
         </li>
@@ -118,19 +109,6 @@
             <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.rsync.prototype.execute">
             function <span class="apidocSignatureSpan">gulp-rsync.rsync.prototype.</span>execute
             <span class="apidocSignatureSpan">(callback)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-rsync.toString">module gulp-rsync.toString</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.gulp-rsync.toString.toString">
-            function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
-            <span class="apidocSignatureSpan">()</span>
             </a>
 
         </li>
@@ -324,37 +302,6 @@
 
 
 
-    <h2>
-        <a href="#apidoc.element.gulp-rsync.toString" id="apidoc.element.gulp-rsync.toString">
-        function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-    );
-  }
-  config.options['delete'] = true;
-}
-
-if (!options.silent) {
-  var handler = function(data) {
-    data.<span class="apidocCodeKeywordSpan">toString</span>().split('\r').forEach(function(chunk) {
-      chunk.split('\n').forEach(function(line, j, lines) {
-        log('gulp-rsync:', line, (j &lt; lines.length - 1 ? '\n' : ''));
-      });
-    });
-  };
-  config.stdoutHandler = handler;
-  config.stderrHandler = handler;
-...</pre></li>
-    </ul>
-
-
-
 
 </div>
 
@@ -539,40 +486,6 @@ rsync(config).<span class="apidocCodeKeywordSpan">execute</span>(function(error,
     gutil.log(command);
   }
   if (!options.silent) {
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.gulp-rsync.toString" id="apidoc.module.gulp-rsync.toString">module gulp-rsync.toString</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.gulp-rsync.toString.toString" id="apidoc.element.gulp-rsync.toString.toString">
-        function <span class="apidocSignatureSpan">gulp-rsync.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-    );
-  }
-  config.options['delete'] = true;
-}
-
-if (!options.silent) {
-  var handler = function(data) {
-    data.<span class="apidocCodeKeywordSpan">toString</span>().split('\r').forEach(function(chunk) {
-      chunk.split('\n').forEach(function(line, j, lines) {
-        log('gulp-rsync:', line, (j &lt; lines.length - 1 ? '\n' : ''));
-      });
-    });
-  };
-  config.stdoutHandler = handler;
-  config.stderrHandler = handler;
 ...</pre></li>
     </ul>
 
