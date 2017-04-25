@@ -1,4 +1,7 @@
-# api documentation for  [gulp-rsync (v0.0.7)](https://github.com/jerrysu/gulp-rsync)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-rsync.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-rsync) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-rsync.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-rsync)
+# npmdoc-gulp-rsync
+
+#### basic api documentation for  [gulp-rsync (v0.0.7)](https://github.com/jerrysu/gulp-rsync)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-rsync.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-rsync) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-rsync.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-rsync)
+
 #### Rsync tasks for deploying gulp file structures
 
 [![NPM](https://nodei.co/npm/gulp-rsync.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-rsync)
@@ -69,7 +72,8 @@
     "scripts": {
         "test": "mocha"
     },
-    "version": "0.0.7"
+    "version": "0.0.7",
+    "bin": {}
 }
 ```
 
